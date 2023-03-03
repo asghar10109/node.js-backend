@@ -1,6 +1,6 @@
 const Userrouter = require('express').Router()
 const UserImage = require('../Middleware/UserImage');
-const Auth = require('../Middleware/Auth')
+const Auth = require('../Middleware/Auth');
 const {
     createUser,
     LoginUser,
@@ -11,7 +11,7 @@ const {
 
 Userrouter.post('/createUsers', UserImage.upload , createUser)
 
-Userrouter.post('/login',   LoginUser)
+Userrouter.post('/login', LoginUser)
 
 Userrouter.post('/profile', Auth , Profile)
 

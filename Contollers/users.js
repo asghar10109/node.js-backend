@@ -1,7 +1,6 @@
 const userModel = require('../Models/users')
 const CryptoJS = require("crypto-js");
-const jwt = require('jsonwebtoken');
-
+const Login_Token_Authentication = require('../Middleware/loginJwt')
 
 const createUser = async (req,res,next) => {
 try{
@@ -29,38 +28,19 @@ try{
     })
 }
 }
-
 const LoginUser = async (req,res,next) => {
     
-    const email = req.body.email
-    const typePassword = req.body.password
+    const type_email = req.body.email
+    const type_password = req.body.password
 
-    const data = await userModel.findOne({ email : email });
+    const data = await userModel.findOne({ email : type_email });
     const show_password = CryptoJS.AES.decrypt(data.password,  process.env.Secret_password);
     const original_password = show_password.toString(CryptoJS.enc.Utf8);
 
-    if(email == data.email && typePassword == original_password){
-
-     let token =  jwt.sign({
-            id: data._id
-          }, process.env.Secret_JWT , { expiresIn: '1d' });
-    
-          res.send({
-            message:"token generated",
-            status:201,
-            data : token
-          })
-
-    }
-    else{
-        res.send({
-            message:"token not found",
-            status:404
-          })
-    }
+    type_email == data.email && type_password == original_password  ?
+    token = Login_Token_Authentication(data , '1h')                 :
+    res.send({message:"token not found",status:404})   
 }
-
-
 const Profile = async (req,res,next) => {
     const Id = req.id
     try{
@@ -81,7 +61,6 @@ const Profile = async (req,res,next) => {
         }) 
     }
 }
-
 const updateUsers = async (req,res,next)=>{
     const Id = req.id
     try{
@@ -110,7 +89,6 @@ const updateUsers = async (req,res,next)=>{
     }
     
 }
-
 const deleteUsers = async(req,res,next)=>{
     const ID = req.id
     try{
@@ -131,8 +109,6 @@ const deleteUsers = async(req,res,next)=>{
         })
     }
 }
-
-
 
 module.exports= { 
     createUser,
