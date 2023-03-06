@@ -17,4 +17,11 @@ const userTokenAuthentication = (req,res,next) => {
         return next
 
 }
+<<<<<<< HEAD
 module.exports = userTokenAuthentication;
+=======
+
+module.exports = User_Token_Authentication;
+
+
+>>>>>>> 473a045a946f9259843591d39a3fe0903ffb478b
