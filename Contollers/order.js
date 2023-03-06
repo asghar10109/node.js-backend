@@ -9,7 +9,7 @@ const createOrders = async(req,res,next)=>{
             user:req.body.user
     
         })
-        const data = newOrder.save()
+        const data = await newOrder.save()
         res.send({
             message:"new order created successfully",
             status:201,
@@ -33,7 +33,8 @@ const getAll = async(req,res,next) => {
 
     try{
     
-        const data = await orderModel.find()
+        const data = await orderModel.find().populate({path:'user'}).populate({path:'cart',populate:{path:'category',select:'name'}})
+
         res.send({
             message:'get order successfully ',
             status:200,

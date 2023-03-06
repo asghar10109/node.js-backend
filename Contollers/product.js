@@ -1,5 +1,5 @@
 const productModel = require('../Models/product')
-const categoryModel = require('../Models/category');
+
 const createProduct = async(req,res,next)=>{
     
     try{
@@ -40,15 +40,17 @@ const getProduct = async (req,res,next)=>{
     
     try{
         
-            const data = await productModel.findById(_id)
+            const data = await productModel.findById(_id).populate({path:"category",select:'name'})
+            console.log(data)
             res.send({
-                message:'get data successfully',
+                message:'get data successfully ...',
                 status: 200,
                 data:data 
             })
 
     }
     catch(err){
+        console.log(err);
         res.send({
             message:'not get data successfully',
             status: 404,

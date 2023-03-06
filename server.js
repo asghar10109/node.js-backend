@@ -8,18 +8,18 @@ app.use(express.json());
 app.use(cors())
 dotenv.config()
 
-const category_Router = require('./Routes/category')
-const order_Router = require('./Routes/order')
-const product_Router = require('./Routes/product')
-const users_Router = require('./Routes/users')
-const reviews_Router = require('./Routes/reviews')
+const categoryRouter = require('./Routes/category')
+const orderRouter = require('./Routes/order')
+const productRouter = require('./Routes/product')
+const usersRouter = require('./Routes/users')
+const reviewsRouter = require('./Routes/reviews')
 
  
-app.use('/demo/category/',category_Router)
-app.use('/demo/order/',order_Router)
-app.use('/demo/product/',product_Router)
-app.use('/demo/user/',users_Router)
-app.use('/demo/',reviews_Router)
+app.use('/demo/category/',categoryRouter)
+app.use('/demo/order/',orderRouter)
+app.use('/demo/product/',productRouter)
+app.use('/demo/user/',usersRouter)
+app.use('/demo/review/',reviewsRouter)
 
 
 mongoose.connect(process.env.Db).then((res)=>{
