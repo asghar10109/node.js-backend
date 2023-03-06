@@ -44,7 +44,6 @@ const LoginUser = async (req,res,next) => {
 const Profile = async (req,res,next) => {
     const Id = req.id
     try{
-        
         const data = await userModel
                             .findOne({ _id : Id })
                             .select('_id username address email phone avator');
