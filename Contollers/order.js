@@ -1,12 +1,12 @@
 const orderModel = require('../Models/order')
 
 const createOrders = async(req,res,next)=>{
-    
     try{
 
         const newOrder = new orderModel({
             cart:req.body.cart,
-            user:req.body.user
+            user:req.body.user,
+            status: req.body.status || "pending"
     
         })
         const data = await newOrder.save()
@@ -95,9 +95,62 @@ const deleteOrder = async(req,res,next)=>{
     }
 }
 
+
+const statusChangers = async(req,res,next) => {
+    try{
+
+        const orderID = req.params._id
+        const data = await orderModel.findOne({ _id : orderID})
+        
+        // data.status == "pending" ?
+        // updateStatus = await orderModel.findOneAndUpdate(data._id,{$set:{status:"inprocess"}})
+        // (!updateStatus.acknowledged 
+        // ?
+        // (res.send({ message: "order is in process",status:201 }))
+        // :
+        // (res.send({ message: "order is in process",status:201 }))
+        // ) 
+        // :
+        // data.status == "inprocess" ?
+        // updateStatus = await orderModel.findOneAndUpdate(data._id,{$set:{status:"inprocess"}})
+        // (!updateStatus.acknowledged 
+        // ?
+        // (res.send({ message: "order is in process",status:201 }))
+        // :
+        // (res.send({ message: "order is in process",status:201 }))
+        // ) 
+
+
+
+        if(data.status == "pending"){
+          const  updateStatus = await orderModel.findOneAndUpdate(data._id,{$set:{status:"inprocess"}})
+          !updateStatus.acknowledged  ?
+            (res.send({ message: "order is in process",status:201 })) :
+            (res.send({ message: "status is not updated",status:204 }))
+
+            next();
+        }
+        else if(data.status == "inprocess"){
+         
+           const updateStatus = await orderModel.findOneAndUpdate(data._id,{$set:{status:"deliver"}})
+           !updateStatus.acknowledged  ?
+           (res.send({ message: "order is in deliver",status:201 })) :
+           (res.send({ message: "status is not updated",status:204 }))
+
+           next();
+          
+        }
+    }
+    catch(err){
+        console.log("invalid")
+    }
+    
+} 
+
 module.exports= { 
     createOrders,
     getAll,
     getOrderById,
+    statusChangers,
     deleteOrder
 }

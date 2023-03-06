@@ -12,27 +12,7 @@ const createReviews = async(req,res,next)=>{
         const order = await OrderModel.findById(OrderID)
         const Order_UserId = order.user.toString();
         
-
-        // ===============================================================================    
-
-        // console.log(Order_UserId)
-        // console.log(UserID)
-        // console.log("this is order :",order)
-        // console.log("this is product :", order.cart[0].product.toString())
-        
-
-        const productID = order.cart[1].product.toString()
-        const status1 = await productModel.findById(productID)
-        
-
-        const categoryID = status1.category.toString()
-        const status2 = await categoryModel.findById(categoryID)
-        
-        
-        console.log(UserID)
-        //===============================================================================
-
-        if(Order_UserId === UserID && status1.status === status2.status){
+        if(Order_UserId === UserID && order.status === "deliver"){
             const reviews = new reviewsModel({
                 order : req.body.order,
                 rating : req.body.rating,

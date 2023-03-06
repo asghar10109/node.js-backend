@@ -11,11 +11,11 @@ const {
 
 UserRouter.post('/createUsers', UserImage.upload , createUser)
 
-<<<<<<< HEAD
+
 UserRouter.post('/login',   LoginUser)
-=======
-Userrouter.post('/login', LoginUser)
->>>>>>> 473a045a946f9259843591d39a3fe0903ffb478b
+
+UserRouter.post('/login', LoginUser)
+
 
 UserRouter.post('/profile', Auth , Profile)
 

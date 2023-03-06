@@ -14,6 +14,10 @@ const orderModel = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref:'User'
 
+    },
+    status:{
+        type:String,
+        enum:['pending','deliver','inprocess']
     }
 },
 {timestamps:true}
