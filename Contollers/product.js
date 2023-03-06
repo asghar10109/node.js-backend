@@ -1,26 +1,33 @@
-const productModel = require('../Models/product')
+const productModel = require('../Models/product');
+const categoryModel = require('../Models/category');
 
 const createProduct = async(req,res,next)=>{
     
     try{
-        const valid = await categoryModel.find({status: true});
-        console.log(valid)
-        const newProduct = new productModel({
-            name : req.body.name,
-            status : req.body.status,
-            color : req.body.color,
-            size : req.body.size,
-            weight : req.body.weight,
-            category : req.body.category
-        })
-
-        console.log(newProduct)
-        const data = await newProduct.save()
-        res.send({
-            message:"new product is created",
-            status : 201,
-            data : data
-        })
+        const catId = req.body.category
+        const valid = await categoryModel.findById({ _id :catId ,  status: true}).select('status');
+       
+        if(valid.status) {
+            const newProduct = new productModel({
+                name : req.body.name,
+                status : req.body.status,
+                color : req.body.color,
+                size : req.body.size,
+                weight : req.body.weight,
+                category : catId
+            })
+            const data = await newProduct.save()
+            res.send({
+                message:"new product is created",
+                status : 201,
+                data : data
+            })
+        }else{
+            res.send({
+                message:"Category Not Active",
+                status : 404,
+            }) 
+        }
 
     }
     catch(err){
