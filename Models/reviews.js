@@ -2,15 +2,19 @@ const mongoose = require('mongoose')
 
 
 const reviewsModel = new mongoose.Schema({
+    order:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref:'Order'
+    },
     rating:{
         type:Number,
         unique:true,
 
     },
-    order:{
-        type: mongoose.Schema.Types.ObjectId,
-        ref:'Order'
-    }
+    status:{
+        type:Boolean,
+        default : true
+    } 
 
 },{timestamps:true})
 

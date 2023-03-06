@@ -1,4 +1,4 @@
-const Orderrouter = require('express').Router()
+const OrderRouter = require('express').Router()
 const Auth = require('../Middleware/Auth') 
 
 const {
@@ -8,9 +8,9 @@ const {
     deleteOrder
 } = require('../Contollers/order')
 
-Orderrouter.post('/createOrder',Auth, createOrders)
-Orderrouter.get('/getAll',Auth, getAll)
-Orderrouter.get('/getOrderById/:_id',Auth,getOrderById)
-Orderrouter.delete('/deleteOrder/:_id',Auth,deleteOrder)
+OrderRouter.post('/createOrder',Auth, createOrders)
+OrderRouter.get('/getAll',Auth, getAll)
+OrderRouter.get('/getOrderById/:_id',Auth,getOrderById)
+OrderRouter.delete('/deleteOrder/:_id',Auth,deleteOrder)
 
-module.exports = Orderrouter
+module.exports = OrderRouter

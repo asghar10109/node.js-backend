@@ -1,4 +1,4 @@
-const Userrouter = require('express').Router()
+const UserRouter = require('express').Router()
 const UserImage = require('../Middleware/UserImage');
 const Auth = require('../Middleware/Auth')
 const {
@@ -9,15 +9,15 @@ const {
     deleteUsers
 } = require('../Contollers/users')
 
-Userrouter.post('/createUsers', UserImage.upload , createUser)
+UserRouter.post('/createUsers', UserImage.upload , createUser)
 
-Userrouter.post('/login',   LoginUser)
+UserRouter.post('/login',   LoginUser)
 
-Userrouter.post('/profile', Auth , Profile)
+UserRouter.post('/profile', Auth , Profile)
 
-Userrouter.put('/updateUsers', Auth, updateUsers)
+UserRouter.put('/updateUsers', Auth, updateUsers)
 
-Userrouter.delete('/deleteUsers',Auth,deleteUsers)
+UserRouter.delete('/deleteUsers',Auth,deleteUsers)
 
 
-module.exports = Userrouter
+module.exports = UserRouter

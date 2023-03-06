@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 
-const User_Token_Authentication = (req,res,next) => {
+const userTokenAuthentication = (req,res,next) => {
 
     const token = req.headers['authorization'].split(" ")[1];
     if(!token){
@@ -10,10 +10,11 @@ const User_Token_Authentication = (req,res,next) => {
             const decoded =  jwt.verify(token , process.env.Secret_JWT)
             req.id = decoded.id
             next();
+            
         }catch(err){
             res.status(400).send("Invalid token.");
         }
         return next
 
 }
-module.exports = User_Token_Authentication;
+module.exports = userTokenAuthentication;
