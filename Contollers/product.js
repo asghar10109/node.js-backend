@@ -1,8 +1,11 @@
 const productModel = require('../Models/product')
-
+const categoryModel = require('../Models/category');
 const createProduct = async(req,res,next)=>{
     
     try{
+
+        const valid = await categoryModel.find({status: true});
+        console.log(valid)
         const newProduct = new productModel({
             name : req.body.name,
             status : req.body.status,

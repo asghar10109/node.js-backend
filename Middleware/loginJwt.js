@@ -1,8 +1,9 @@
 const jwt = require('jsonwebtoken');
 
-const Login_Token_Authentication = (data,time) => {
+const Login_Token_Authentication =  (data,time) => {
 
-    return jwt.sign(data , process.env.Secret_JWT , { expiresIn: `${time}` } )
+    const token =  jwt.sign(data.toJSON() , process.env.Secret_JWT , { expiresIn: `${time}` } )
+    return token;
 
 }
 
