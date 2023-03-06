@@ -11,9 +11,6 @@ const {
 
 UserRouter.post('/createUsers', UserImage.upload , createUser)
 
-
-UserRouter.post('/login',   LoginUser)
-
 UserRouter.post('/login', LoginUser)
 
 
