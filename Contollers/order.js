@@ -7,24 +7,20 @@ const createOrders = async(req,res,next)=>{
             cart:req.body.cart,
             user:req.body.user,
             quantity:req.body.quantity,
+            totalprice:req.body.totalprice,
             status: req.body.status || "pending"
            
     
         })
         const data = await newOrder.save()
         
-        const product =[]
-        const proprice = data.cart.map(async (item)=>{
-            const id = await productModel.findById({_id:item.product})
-            return prices = id.price
+        res.send({
+            message: "new order is created",
+            status : 201,
+            data :data 
         })
-        const u = await proprice;
-        console.log("kkk",u)
         
-        // res.send({npm start
-
-    
-        // })
+        
     }
     catch(err){
         res.send({
@@ -110,20 +106,37 @@ const statusChangers = async(req,res,next) => {
 
         const orderID = req.params._id
         const data = await orderModel.findOne({ _id : orderID})
-         
-        data.status == "pending" ? 
-        updateStatus = await orderModel.findOneAndUpdate(data._id,{$set:{status:"inprocess"}}) 
-        (!updateStatus.acknowledged
-        ? (res.send({ message: "order is in process",status:201 }))
-        : (res.send({ message: "order is not updated",status:201 }))) 
         
-        : 
+        if(data.status == "pending" && data.totalprice >= 2000 )
+        {
+        
         updateStatus = await orderModel.findOneAndUpdate(data._id,{$set:{status:"inprocess"}}) 
-        (!updateStatus.acknowledged 
-        ? (res.send({ message: "order is in deliver",status:201 }))
-        : (res.send({ message: "order is not updated",status:201 })));
-       
-
+        res.send({
+            message:"status changed into in process",
+            status:201,
+            data :updateStatus
+            
+        })
+        
+        }
+        else if(data.totalprice < 2000 ){
+            res.send({
+                message:"your order is not greater than 2000",
+                status:400
+                
+                
+            })
+        }
+        else if (data.status == "inprocess"){
+            updateStatus = await orderModel.findOneAndUpdate(data._id,{$set:{status:"deliver"}}) 
+        res.send({
+            message:"status changed into in deliver",
+            status:201,
+            data :updateStatus
+            
+        })
+        }
+        
         
     }
     catch(err){
