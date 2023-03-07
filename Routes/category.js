@@ -5,7 +5,8 @@ const {
     createCategory,
     getCategory,
     updateCategory,
-    deleteCategory
+    deleteCategory,
+    changeStatus
 } = require('../Contollers/category')
 
 CategoryRouter.post('/createCategory', Auth ,createCategory)
@@ -15,5 +16,7 @@ CategoryRouter.get('/getCategory/:_id',Auth,getCategory)
 CategoryRouter.put('/updateCategory/:_id',Auth,updateCategory)
 
 CategoryRouter.delete('/deleteCategory/:_id',Auth,deleteCategory)
+
+CategoryRouter.put('/changeStatus/:_id',Auth,changeStatus)
 
 module.exports = CategoryRouter

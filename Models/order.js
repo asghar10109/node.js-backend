@@ -18,6 +18,14 @@ const orderModel = new mongoose.Schema({
     status:{
         type:String,
         enum:['pending','deliver','inprocess']
+    },
+    quantity:{
+        type:Number,
+        required : true
+    },
+    
+    totalprice:{
+        type:Number
     }
 },
 {timestamps:true}

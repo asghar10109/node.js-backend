@@ -1,25 +1,34 @@
 const orderModel = require('../Models/order')
-
+const productModel = require('../Models/product')
 const createOrders = async(req,res,next)=>{
     try{
 
         const newOrder = new orderModel({
             cart:req.body.cart,
             user:req.body.user,
+            quantity:req.body.quantity,
             status: req.body.status || "pending"
+           
     
         })
         const data = await newOrder.save()
-        res.send({
-            message:"new order created successfully",
-            status:201,
-            data:data 
-    
+        
+        const product =[]
+        const proprice = data.cart.map(async (item)=>{
+            const id = await productModel.findById({_id:item.product})
+            return prices = id.price
         })
+        const u = await proprice;
+        console.log("kkk",u)
+        
+        // res.send({npm start
+
+    
+        // })
     }
     catch(err){
         res.send({
-            message:"new order created successfully",
+            message:"new order is not created successfully",
             status:404,
              
     

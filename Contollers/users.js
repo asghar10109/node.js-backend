@@ -37,7 +37,7 @@ const LoginUser = async (req,res,next) => {
     const show_password = CryptoJS.AES.decrypt(data.password,  process.env.Secret_password);
     const original_password = show_password.toString(CryptoJS.enc.Utf8);
     type_email == data.email && type_password == original_password  ?
-    res.send( {message:"token generated", status:201 ,data :  Login_Token_Authentication(data , '1h') })   :
+    res.send( {message:"token generated", status:201 ,data :  Login_Token_Authentication(data , '1d') })   :
     res.send( {message:"token not found",status:404} )
 }
 const Profile = async (req,res,next) => {

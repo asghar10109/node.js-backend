@@ -14,9 +14,12 @@ const createProduct = async(req,res,next)=>{
                 color : req.body.color,
                 size : req.body.size,
                 weight : req.body.weight,
+                price : req.body.price,
                 category : catId
             })
+            console.log(newProduct)
             const data = await newProduct.save()
+            
             res.send({
                 message:"new product is created",
                 status : 201,
@@ -122,10 +125,36 @@ const deleteProduct = async (req,res,next )=>{
 
 }
 
+
+const searchProduct = async(req,res,next)=>{
+    try{
+    
+    
+        const name = req.params.name
+        const productSearch = await productModel.find({ name: { $regex: name, $options: 'i' } });
+        console.log(productSearch)
+        res.send({
+            message:"get data after searching",
+            status:201,
+            data :productSearch 
+        })
+    }
+    catch(err){
+        res.send({
+            message:"not get data after searching",
+            status:404
+             
+        })
+    }
+        
+
+}
+
 module.exports= { 
     createProduct,
     getProduct,
     updateProduct,
-    deleteProduct
+    deleteProduct,
+    searchProduct
 }
 

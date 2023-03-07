@@ -1,4 +1,4 @@
-const { findByIdAndUpdate } = require('../Models/category')
+
 const categoryModel = require('../Models/category') 
 
 const createCategory = async(req,res,next)=>{
@@ -93,9 +93,38 @@ const deleteCategory = async(req,res,next)=>{
 
 } 
 
+const changeStatus = async(req,res,next)=>{
+    const _id = req.params._id
+    const data = await categoryModel.findOne({_id})
+    console.log(data)
+
+    if(data.status == true){
+        const  updateStatus = await categoryModel.findOneAndUpdate(data._id,{$set:{status:false}})
+        !updateStatus.acknowledged  ?
+          (res.send({ message: "category has to be changed into false ",status:201 })) :
+          (res.send({ message: "status is not updated",status:204 }))
+
+          next();
+      }
+      else if(data.status == false){
+       
+         const updateStatus = await categoryModel.findOneAndUpdate(data._id,{$set:{status:true}})
+         !updateStatus.acknowledged  ?
+         (res.send({ message: "category has to be changed into true",status:201 })) :
+         (res.send({ message: "status is not updated",status:204 }))
+
+         next();
+        
+      }
+
+    
+
+}
+
 module.exports= { 
     createCategory,
     getCategory,
     updateCategory,
-    deleteCategory
+    deleteCategory,
+    changeStatus
 }
