@@ -7,7 +7,10 @@ const orderModel = new mongoose.Schema({
                 type: mongoose.Schema.Types.ObjectId,
                 ref:'Product'
         
-            }}
+            },quantity:{
+                type:Number
+            }
+        }
         ],
     
     user:{
@@ -19,11 +22,6 @@ const orderModel = new mongoose.Schema({
         type:String,
         enum:['pending','deliver','inprocess']
     },
-    quantity:{
-        type:Number,
-        required : true
-    },
-    
     totalprice:{
         type:Number
     }

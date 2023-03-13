@@ -1,13 +1,25 @@
 const orderModel = require('../Models/order')
 const productModel = require('../Models/product')
 const createOrders = async(req,res,next)=>{
-    try{
 
+    const prod = req.body.cart
+    const arr =[]
+    let t = 0
+    products = prod.map(async(ele)=>{
+        
+        const prodData = await productModel.findById({_id: ele.product})
+        var total = prodData.price*ele.quantity;
+        t += total
+        return total;          
+    })
+    Promise.all(products)
+
+    .then(async(arr) => {
+        
         const newOrder = new orderModel({
             cart:req.body.cart,
             user:req.body.user,
-            quantity:req.body.quantity,
-            totalprice:req.body.totalprice,
+            totalprice: t,
             status: req.body.status || "pending"
            
     
@@ -18,19 +30,16 @@ const createOrders = async(req,res,next)=>{
             message: "new order is created",
             status : 201,
             data :data 
-        })
-        
-        
-    }
-    catch(err){
+        })   
+    })
+
+    .catch((err) => {
         res.send({
-            message:"new order is not created successfully",
-            status:404,
-             
-    
-        })
-    }
-        
+            message: "new order is not created",
+            status : 404,
+            data :data 
+        })   
+    });     
 }
 
 

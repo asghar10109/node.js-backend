@@ -128,12 +128,24 @@ const deleteProduct = async (req,res,next )=>{
 
 const searchProduct = async(req,res,next)=>{
     try{
-    
+     
     
         const name = req.params.name
-        const productSearch = await productModel.find({ name: { $regex: name, $options: 'i' } });
-        console.log(productSearch)
+        const status = req.params.status
+
+        //const productSearch = await productModel.find({ name: { $regex: name , $options: 'i' } } );
+        
+        //const productSearch = await productModel.find([{ name: { $regex: name , $options: 'i'}}, { status: { $regex: status , $options: 'i'}}])
+        
+        var re = new RegExp(req.params.color, 'i');
+        
+        const productSearch = await productModel.find().or([{ color: { $regex: re }}, { color: { $regex: re }}]);
+
+
+
+
         res.send({
+            total:productSearch.length,
             message:"get data after searching",
             status:201,
             data :productSearch 
@@ -150,11 +162,35 @@ const searchProduct = async(req,res,next)=>{
 
 }
 
+const getall = async(req,res,next)=>{
+    try{
+        const data = await productModel.find()
+
+        res.send({
+            total:data.length,
+            message:"get all data ",
+            status:201,
+            data :data
+
+        })
+
+    }
+    catch(err){
+        res.send({
+            message:"dont get all data",
+            status:404,
+            
+
+        })
+    }
+
+}
 module.exports= { 
     createProduct,
     getProduct,
     updateProduct,
     deleteProduct,
-    searchProduct
+    searchProduct,
+    getall
 }
 

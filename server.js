@@ -5,8 +5,8 @@ const dotenv = require('dotenv')
 const mongoose = require('mongoose')
 
 app.use(express.json());
-app.use(cors())
-dotenv.config()
+app.use(cors({ origin : "*" }));
+dotenv.config();
 
 const categoryRouter = require('./Routes/category')
 const orderRouter = require('./Routes/order')

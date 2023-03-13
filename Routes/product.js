@@ -6,7 +6,8 @@ const {
     getProduct,
     updateProduct,
     deleteProduct,
-    searchProduct
+    searchProduct,
+    getall
 } = require('../Contollers/product')
 
 productRouter.post('/createProduct',Auth,createProduct)
@@ -17,7 +18,8 @@ productRouter.put('/updateProduct/:_id',Auth,updateProduct)
 
 productRouter.delete('/deleteProduct/:_id',Auth,deleteProduct)
 
-productRouter.get('/searchProduct/:name',Auth,searchProduct)
+productRouter.get('/searchProduct/:color',Auth,searchProduct)
 
+productRouter.get('/getallProduct',getall)
 module.exports = productRouter
 
